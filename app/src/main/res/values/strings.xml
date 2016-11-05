@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Guedr</string>
+    <string name="hello_world">Hola amundio!</string>
+    <string name="offline_weather_image_desc">Offline Weather</string>
 </resources>
