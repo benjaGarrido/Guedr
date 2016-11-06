@@ -15,11 +15,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:text="@string/hello_world"
+        android:layout_weight="0" />
     
     <ImageView
+        android:id="@+id/forecast_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/offline_weather"
-        android:contentDescription="@string/offline_weather_image_desc" />
+        android:contentDescription="@string/offline_weather_image_desc"
+        android:layout_weight="1" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_change_system"
+        android:layout_weight="0"
+        android:text="@string/change_spanish_system"/>
 </LinearLayout>
