@@ -27,26 +27,13 @@
         android:layout_weight="1"
         android:layout_gravity="center"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ToggleButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_weight="0">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_change_to_spanish_system"
-            android:text="@string/change_spanish_system"
-            android:layout_weight="1"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_change_to_american_system"
-            android:text="@string/change_american_system"
-            android:layout_weight="1"/>
-    </LinearLayout>
+        android:textOn="@string/change_american_system"
+        android:textOff="@string/change_spanish_system"
+        android:id="@+id/btn_forecast_change"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0"/>
 
 </LinearLayout>
