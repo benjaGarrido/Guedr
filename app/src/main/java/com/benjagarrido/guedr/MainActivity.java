@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = MainActivity.class.getName();
     private ImageView forecastImage;
     @Override
@@ -24,21 +24,8 @@ public class MainActivity extends AppCompatActivity {
         // Accedemos a imageView a través de su id
         forecastImage = (ImageView) findViewById(R.id.forecast_image);
 
-        btnChangeToSpanishSystem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.v(TAG,"Dentro del evento onClick del botón btnChangeToSpanishSystem");
-                changeToSpanishSystem (v);
-            }
-        });
-
-        btnChangeToAmericanSystem.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Log.v(TAG,"Dentro del evento onClick del botón btnChangeToAmericanSystem");
-                changeToAmericanSystem (v);
-            }
-        });
+        btnChangeToSpanishSystem.setOnClickListener(this);
+        btnChangeToAmericanSystem.setOnClickListener(this);
 
     }
     public void changeToSpanishSystem (View view){
@@ -51,5 +38,17 @@ public class MainActivity extends AppCompatActivity {
         Log.v(TAG,"Dentro del método changeToAmericanSystem");
         // Cambiamos la imágen a mostrar
         forecastImage.setImageResource(R.drawable.offline_weather);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_change_to_american_system:
+                changeToAmericanSystem(v);
+                break;
+            case R.id.btn_change_to_spanish_system:
+                changeToSpanishSystem(v);
+                break;
+        }
     }
 }
