@@ -24,19 +24,29 @@
         android:layout_height="wrap_content"
         android:src="@drawable/offline_weather"
         android:contentDescription="@string/offline_weather_image_desc"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_gravity="center"/>
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_change_to_spanish_system"
-        android:layout_weight="0"
-        android:text="@string/change_spanish_system"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="0">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_change_to_american_system"
-        android:layout_weight="0"
-        android:text="@string/change_american_system"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_change_to_spanish_system"
+            android:text="@string/change_spanish_system"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_change_to_american_system"
+            android:text="@string/change_american_system"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
 </LinearLayout>
