@@ -29,7 +29,14 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_change_system"
+        android:id="@+id/btn_change_to_spanish_system"
         android:layout_weight="0"
         android:text="@string/change_spanish_system"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_change_to_american_system"
+        android:layout_weight="0"
+        android:text="@string/change_american_system"/>
 </LinearLayout>

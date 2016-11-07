@@ -3,4 +3,5 @@
     <string name="hello_world">Hola amundio!</string>
     <string name="offline_weather_image_desc">Offline Weather</string>
     <string name="change_spanish_system">Cambiar al Sistema Español</string>
+    <string name="change_american_system">Cambiar al Sistema Americano</string>
 </resources>
