@@ -3,6 +3,7 @@ package com.benjagarrido.guedr;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -116,6 +117,10 @@ public class ForecastActivity extends AppCompatActivity {
 
             // Actualizamos la interfaz con las nuevas unidades
             setForecast(mForecast);
+
+            // Avisamos al usuario de que los ajustes han cambiado
+            // Toast.makeText(this,"Preferencias actualizadas",Toast.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content),"Preferencias actualizadas",Snackbar.LENGTH_LONG).show();
         }
     }
 
