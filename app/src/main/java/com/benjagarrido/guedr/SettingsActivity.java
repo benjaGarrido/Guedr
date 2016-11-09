@@ -1,12 +1,16 @@
 package com.benjagarrido.guedr;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class SettingsActivity extends AppCompatActivity {
-    private static final String TAG = SettingsActivity.class.getName();
+    private static final String sTAG = SettingsActivity.class.getName();
+    public static final String EXTRA_CURRENT_UNITS = "current_units";
+
     private RadioGroup mRadioGroup;
 
     @Override
@@ -17,6 +21,7 @@ public class SettingsActivity extends AppCompatActivity {
         // Accedo a las vistas
         mRadioGroup = (RadioGroup) findViewById(R.id.rgUnits);
 
+        // Configuramos las acciones de los botones
         findViewById(R.id.btnAcept).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,9 +34,27 @@ public class SettingsActivity extends AppCompatActivity {
                 cancelSettings();
             }
         });
+
+        // Indicamos que radiobutton debe estar seleccionado inicialmente
+        boolean showCelsius = getIntent().getBooleanExtra(EXTRA_CURRENT_UNITS,true);
+        if (showCelsius){
+            RadioButton radioCelsius = (RadioButton) findViewById(R.id.rbCelsius);
+            radioCelsius.setChecked(true);
+        } else{
+            RadioButton radioFarenheit = (RadioButton) findViewById(R.id.rbFarenheit);
+            radioFarenheit.setChecked(true);
+        }
     }
     private void cancelSettings() {
+        setResult(RESULT_CANCELED);
+        // Finalizamos nuestra actividad
+        finish();
     }
     private void acceptSettings() {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("units",mRadioGroup.getCheckedRadioButtonId());
+        setResult(RESULT_OK, returnIntent);
+        // Finalizamos nuestra actividad
+        finish();
     }
 }
