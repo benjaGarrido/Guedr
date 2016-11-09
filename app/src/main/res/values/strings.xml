@@ -10,4 +10,6 @@
     <string name="soleado_con_nubes">Soleado con nubes</string>
     <string name="desc_imagen_soleado_con_nubes">Imágen de soleado y con nubes</string>
     <string name="menu_settings">Ajustes</string>
+    <string name="preferencias_actualizadas">Preferencias actualizadas</string>
+    <string name="deshacer">Deshacer</string>
 </resources>

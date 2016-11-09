@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -87,6 +88,8 @@ public class ForecastActivity extends AppCompatActivity {
         Log.v(sTAG,"Entrando en seleccionarSettings");
         // Estoy manejando el resultado de la pantalla de ajustes
         if (resultCode == RESULT_OK){
+            // Guardamos el valor previo de showCelsius por si el usuario quiere deshacer
+            final boolean oldShowCelsius = showCelsius;
             // El usuario ha confirmado una modificación
             int optionSelected = data.getIntExtra("units", R.id.rbCelsius);
             if (optionSelected == R.id.rbCelsius){
@@ -120,7 +123,22 @@ public class ForecastActivity extends AppCompatActivity {
 
             // Avisamos al usuario de que los ajustes han cambiado
             // Toast.makeText(this,"Preferencias actualizadas",Toast.LENGTH_LONG).show();
-            Snackbar.make(findViewById(android.R.id.content),"Preferencias actualizadas",Snackbar.LENGTH_LONG).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.preferencias_actualizadas,Snackbar.LENGTH_LONG)
+                    .setAction(R.string.deshacer, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Restauramos el valor
+                            showCelsius = oldShowCelsius;
+                            // Guardamos el valor en las preferencias
+                            PreferenceManager.getDefaultSharedPreferences(ForecastActivity.this)
+                                    .edit()
+                                    .putBoolean(sPREFERENCE_UNITS,showCelsius)
+                                    .commit();
+                            // Actualizamos el modelo
+                            setForecast(mForecast);
+                        }
+                    })
+                    .show();
         }
     }
 
