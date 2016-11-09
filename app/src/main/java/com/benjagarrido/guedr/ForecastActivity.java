@@ -1,7 +1,10 @@
 package com.benjagarrido.guedr;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +35,30 @@ public class ForecastActivity extends AppCompatActivity {
         setForecast(forecast);
 
     }
+
+    // Este establece cómo es el menú
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        return true;
+    }
+
+    // Este indica qué pasa cuando pulsamos una opción de menú
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean superReturn = super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.men_show_settings:
+                // Lanzamos la actividad Settings_Activity
+                Intent intent = new Intent(this,SettingsActivity.class);
+                // Iniciamos el intent explícito
+                startActivity(intent);
+                return true;
+        }
+        return superReturn;
+    }
+
     public void setForecast (Forecast forecast){
         // Muestro en la interfaz mi modelo
         mMaxTemp.setText(String.format(getString(R.string.temperatura_maxima),forecast.getMaxTemp()));

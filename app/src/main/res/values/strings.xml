@@ -9,4 +9,5 @@
     <string name="humedad">Humedad relativa de: %.1f</string>
     <string name="soleado_con_nubes">Soleado con nubes</string>
     <string name="desc_imagen_soleado_con_nubes">Imágen de soleado y con nubes</string>
+    <string name="menu_settings">Ajustes</string>
 </resources>

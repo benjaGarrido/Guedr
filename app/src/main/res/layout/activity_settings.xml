@@ -14,7 +14,7 @@
         android:id="@+id/rgUnits"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:checkedButton="@id/rbCelsius">
+        android:checkedButton="@+id/rbCelsius">
         <RadioButton
             android:id="@+id/rbCelsius"
             android:layout_width="match_parent"
@@ -31,10 +31,12 @@
         android:layout_height="wrap_content"
         android:gravity="center">
         <Button
+            android:id="@+id/btnAcept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Aceptar"/>
         <Button
+            android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancelar"/>
