@@ -12,4 +12,5 @@
     <string name="menu_settings">Ajustes</string>
     <string name="preferencias_actualizadas">Preferencias actualizadas</string>
     <string name="deshacer">Deshacer</string>
+    <string name="city_example">Madrid</string>
 </resources>
