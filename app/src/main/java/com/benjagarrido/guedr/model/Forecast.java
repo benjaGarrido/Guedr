@@ -1,4 +1,4 @@
-package com.benjagarrido.guedr;
+package com.benjagarrido.guedr.model;
 
 /**
  * Created by benjamingarridobarreiro on 7/11/16.

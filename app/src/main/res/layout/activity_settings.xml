@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.benjagarrido.guedr.SettingsActivity">
+    tools:context="com.benjagarrido.guedr.activity.SettingsActivity">
     <RadioGroup
         android:id="@+id/rgUnits"
         android:layout_width="match_parent"

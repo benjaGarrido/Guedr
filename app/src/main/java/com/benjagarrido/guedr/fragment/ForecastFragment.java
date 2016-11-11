@@ -1,4 +1,4 @@
-package com.benjagarrido.guedr;
+package com.benjagarrido.guedr.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -17,6 +17,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.benjagarrido.guedr.R;
+import com.benjagarrido.guedr.activity.ForecastActivity;
+import com.benjagarrido.guedr.activity.SettingsActivity;
+import com.benjagarrido.guedr.model.Forecast;
+
 /**
  * Created by benjamingarridobarreiro on 9/11/16.
  */
@@ -30,6 +35,7 @@ public class ForecastFragment extends Fragment{
     private TextView mMinTemp;
     private TextView mHumidity;
     private TextView mDescription;
+    private TextView mCityName;
     private ImageView mForecastImage;
     private boolean showCelsius;
     private Forecast mForecast;
@@ -55,7 +61,13 @@ public class ForecastFragment extends Fragment{
         mMinTemp = (TextView)root.findViewById(R.id.txtMinTemp);
         mHumidity = (TextView)root.findViewById(R.id.txtHumidity);
         mDescription = (TextView)root.findViewById(R.id.txtForecast);
+        mCityName = (TextView)root.findViewById(R.id.txtCiudad);
         mForecastImage = (ImageView)root.findViewById(R.id.imgForecast);
+
+        // Con los argumentos que me pasan configuro la vista
+        Bundle arguments = getArguments();
+        String cityName = arguments.getString("cityName");
+        mCityName.setText(cityName);
 
         // Creo mi modelo
         mForecast = new Forecast(30,15,25,"Algunas nubes",R.drawable.sun_cloud);
