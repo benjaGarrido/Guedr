@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.benjagarrido.guedr.R;
 import com.benjagarrido.guedr.activity.ForecastActivity;
 import com.benjagarrido.guedr.activity.SettingsActivity;
+import com.benjagarrido.guedr.model.City;
 import com.benjagarrido.guedr.model.Forecast;
 
 /**
@@ -27,6 +28,8 @@ import com.benjagarrido.guedr.model.Forecast;
  */
 
 public class ForecastFragment extends Fragment{
+    public static final String ARG_CITY = "city";
+
     private static final String sTAG = ForecastActivity.class.getName();
     private static final int sREQUEST_UNITS=1;
     private static final String sPREFERENCE_UNITS = "units";
@@ -38,13 +41,29 @@ public class ForecastFragment extends Fragment{
     private TextView mCityName;
     private ImageView mForecastImage;
     private boolean showCelsius;
-    private Forecast mForecast;
+    private City mCity;
+
+    public static ForecastFragment newInstance(City city){
+        ForecastFragment fragment = new ForecastFragment();
+
+        // Le paso al fragment los argumentos que necesita
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(ForecastFragment.ARG_CITY,city);
+        // Asigno los argumentos al fragment
+        fragment.setArguments(arguments);
+
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Indicamos a la actividad que este fragment tiene menús
         setHasOptionsMenu(true);
+
+        if (getArguments()!=null){
+            mCity = (City) getArguments().getSerializable(ARG_CITY);
+        }
     }
 
     @Nullable
@@ -64,14 +83,7 @@ public class ForecastFragment extends Fragment{
         mCityName = (TextView)root.findViewById(R.id.txtCiudad);
         mForecastImage = (ImageView)root.findViewById(R.id.imgForecast);
 
-        // Con los argumentos que me pasan configuro la vista
-        Bundle arguments = getArguments();
-        String cityName = arguments.getString("cityName");
-        mCityName.setText(cityName);
-
-        // Creo mi modelo
-        mForecast = new Forecast(30,15,25,"Algunas nubes",R.drawable.sun_cloud);
-        setForecast(mForecast);
+        updateCityInfo();
         return root;
     }
 
@@ -129,10 +141,10 @@ public class ForecastFragment extends Fragment{
             PreferenceManager.getDefaultSharedPreferences(getActivity())
                     .edit()
                     .putBoolean(sPREFERENCE_UNITS,showCelsius)
-                    .commit();
+                    .apply();
 
             // Actualizamos la interfaz con las nuevas unidades
-            setForecast(mForecast);
+            updateCityInfo();
 
             // Avisamos al usuario de que los ajustes han cambiado
             Snackbar.make(getView(), R.string.preferencias_actualizadas,Snackbar.LENGTH_LONG)
@@ -145,16 +157,18 @@ public class ForecastFragment extends Fragment{
                             PreferenceManager.getDefaultSharedPreferences(getActivity())
                                     .edit()
                                     .putBoolean(sPREFERENCE_UNITS,showCelsius)
-                                    .commit();
+                                    .apply();
                             // Actualizamos el modelo
-                            setForecast(mForecast);
+                            updateCityInfo();
                         }
                     })
                     .show();
         }
     }
 
-    public void setForecast (Forecast forecast){
+    public void updateCityInfo (){
+        Forecast forecast = mCity.getForecast();
+
         float maxTemp = forecast.getMaxTemp();
         float minTemp=forecast.getMimTemp();
 
@@ -169,6 +183,7 @@ public class ForecastFragment extends Fragment{
         mHumidity.setText(String.format(getString(R.string.humedad),forecast.getHumidity()));
         mDescription.setText(forecast.getDescription());
         mForecastImage.setImageResource(forecast.getIcon());
+        mCityName.setText(mCity.getName());
     }
 
     protected static float toFarenheit (float celsius){

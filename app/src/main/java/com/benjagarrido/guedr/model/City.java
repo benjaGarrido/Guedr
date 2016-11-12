@@ -1,10 +1,12 @@
 package com.benjagarrido.guedr.model;
 
+import java.io.Serializable;
+
 /**
  * Created by benjamingarridobarreiro on 11/11/16.
  */
 
-public class City {
+public class City implements Serializable{
     private String mName;
     private Forecast mForecast;
 

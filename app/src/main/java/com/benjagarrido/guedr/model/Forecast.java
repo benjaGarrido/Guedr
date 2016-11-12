@@ -1,10 +1,12 @@
 package com.benjagarrido.guedr.model;
 
+import java.io.Serializable;
+
 /**
  * Created by benjamingarridobarreiro on 7/11/16.
  */
 
-public class Forecast {
+public class Forecast implements Serializable {
     // Members  m-
     // Static   s-
     private float mMaxTemp;

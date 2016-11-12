@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.benjagarrido.guedr.R;
 import com.benjagarrido.guedr.model.Cities;
+import com.benjagarrido.guedr.model.City;
 import com.benjagarrido.guedr.model.Forecast;
 
 
@@ -52,18 +53,11 @@ class CityPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // Instancio el fragment a mostrar en el viewPager
-        ForecastFragment fragment =new ForecastFragment();
-
         // Saco del modelo la información que necesita el fragment
-        String cityName = mCities.getCities().get(position).getName();
+        City city = mCities.getCities().get(position);
 
-        // Le paso al fragment los argumentos que necesita
-        Bundle arguments = new Bundle();
-        arguments.putString("cityName",cityName);
-
-        // Asigno los argumentos al fragment
-        fragment.setArguments(arguments);
+        // Instancio el fragment a mostrar en el viewPager
+        ForecastFragment fragment = ForecastFragment.newInstance(city);
 
         // Devuelvo el fragment listo para ser mostrado
         return fragment;
