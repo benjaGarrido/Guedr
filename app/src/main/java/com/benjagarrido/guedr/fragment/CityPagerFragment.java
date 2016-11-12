@@ -67,4 +67,10 @@ class CityPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mCities.getCities().size();
     }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        super.getPageTitle(position);
+        return  mCities.getCities().get(position).getName();
+    }
 }
