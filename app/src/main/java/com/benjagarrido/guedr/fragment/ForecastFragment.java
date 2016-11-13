@@ -38,7 +38,6 @@ public class ForecastFragment extends Fragment{
     private TextView mMinTemp;
     private TextView mHumidity;
     private TextView mDescription;
-    private TextView mCityName;
     private ImageView mForecastImage;
     private boolean showCelsius;
     private City mCity;
@@ -80,7 +79,6 @@ public class ForecastFragment extends Fragment{
         mMinTemp = (TextView)root.findViewById(R.id.txtMinTemp);
         mHumidity = (TextView)root.findViewById(R.id.txtHumidity);
         mDescription = (TextView)root.findViewById(R.id.txtForecast);
-        mCityName = (TextView)root.findViewById(R.id.txtCiudad);
         mForecastImage = (ImageView)root.findViewById(R.id.imgForecast);
 
         updateCityInfo();
@@ -183,7 +181,6 @@ public class ForecastFragment extends Fragment{
         mHumidity.setText(String.format(getString(R.string.humedad),forecast.getHumidity()));
         mDescription.setText(forecast.getDescription());
         mForecastImage.setImageResource(forecast.getIcon());
-        mCityName.setText(mCity.getName());
     }
 
     protected static float toFarenheit (float celsius){

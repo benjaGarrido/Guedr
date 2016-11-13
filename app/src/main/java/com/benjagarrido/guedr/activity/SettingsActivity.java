@@ -3,6 +3,7 @@ package com.benjagarrido.guedr.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -46,6 +47,12 @@ public class SettingsActivity extends AppCompatActivity {
             RadioButton radioFarenheit = (RadioButton) findViewById(R.id.rbFarenheit);
             radioFarenheit.setChecked(true);
         }
+
+        // Le indicamos a la actividad la toolbar a utilizar @layout/toolbar_main
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tbMainToolbar);
+
+        // Le decimos a la actividad que queremos mostrar esa vista toolbar como nuestra toolbar
+        setSupportActionBar(toolbar);
     }
     private void cancelSettings() {
         setResult(RESULT_CANCELED);
