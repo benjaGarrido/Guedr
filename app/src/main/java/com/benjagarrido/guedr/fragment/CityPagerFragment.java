@@ -8,6 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -21,9 +24,16 @@ import com.benjagarrido.guedr.model.City;
  */
 public class CityPagerFragment extends Fragment {
     private Cities mCities;
+    private ViewPager mViewPager;
 
     public CityPagerFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -36,13 +46,13 @@ public class CityPagerFragment extends Fragment {
         mCities = new Cities();
 
         // Accedemos al viewPager de nuestra interfaz
-        ViewPager vp = (ViewPager)root.findViewById(R.id.vpCities);
+        mViewPager = (ViewPager)root.findViewById(R.id.vpCities);
 
         // Le decimos al viewPager quien es su adaptador, que le dará los fragment que debe dibujar
-        vp.setAdapter(new CityPagerAdapter(getFragmentManager(), mCities));
+        mViewPager.setAdapter(new CityPagerAdapter(getFragmentManager(), mCities));
 
         // Capturo el momento en el que usuario cambia de pagina en el ViewPager
-        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -50,7 +60,7 @@ public class CityPagerFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                updateCityInfo(position);
+                updateCityInfo();
             }
 
             @Override
@@ -58,10 +68,10 @@ public class CityPagerFragment extends Fragment {
 
             }
         });
-        updateCityInfo(0);
+        updateCityInfo();
         return root;
     }
-    public void updateCityInfo (int position){
+    public void updateCityInfo (){
         // Modificamos el título de la toolbar
         // 1- Accedemos a la actividad que nos contiene
         if (getActivity() instanceof AppCompatActivity){
@@ -69,7 +79,43 @@ public class CityPagerFragment extends Fragment {
             // 2- Acceder dentro de la actividad a la actionbar
             ActionBar actionBar = activy.getSupportActionBar();
             // 3- Cambiar el texto de la toolbar
-            actionBar.setTitle(mCities.getCities().get(position).getName());
+            actionBar.setTitle(mCities.getCities().get(mViewPager.getCurrentItem()).getName());
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.citypager, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean superValue = super.onOptionsItemSelected(item);
+        switch (item.getItemId()){
+            case R.id.previus:
+                // Retrocedemos una página
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
+                updateCityInfo();
+                return true;
+            case R.id.next:
+                // Avanzamos una página
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
+                updateCityInfo();
+                return true;
+        }
+        return superValue;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        if(mViewPager != null) {
+            MenuItem menuPrev = menu.findItem(R.id.previus);
+            MenuItem menuNext = menu.findItem(R.id.next);
+
+            menuNext.setEnabled(mViewPager.getCurrentItem() < mCities.getCities().size() - 1);
+            menuPrev.setEnabled(mViewPager.getCurrentItem() > 0);
         }
     }
 }

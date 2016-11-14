@@ -89,7 +89,7 @@ public class ForecastFragment extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_forecast, menu);
+        inflater.inflate(R.menu.forecast, menu);
     }
 
     // Este indica qué pasa cuando pulsamos una opción de menú
