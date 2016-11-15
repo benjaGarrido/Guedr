@@ -31,4 +31,9 @@ public class City implements Serializable{
         mName = name;
         mForecast = forecast;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }
