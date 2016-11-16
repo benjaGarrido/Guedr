@@ -90,7 +90,7 @@ public class CityPagerFragment extends Fragment {
 
         return root;
     }
-    public void updateCityInfo (){
+    protected void updateCityInfo (){
         // Modificamos el título de la toolbar
         // 1- Accedemos a la actividad que nos contiene
         if (getActivity() instanceof AppCompatActivity){
@@ -100,6 +100,11 @@ public class CityPagerFragment extends Fragment {
             // 3- Cambiar el texto de la toolbar
             actionBar.setTitle(mCities.getCities().get(mViewPager.getCurrentItem()).getName());
         }
+    }
+
+    public void showCity (int position){
+        mViewPager.setCurrentItem(position);
+        updateCityInfo();
     }
 
     @Override
@@ -114,13 +119,11 @@ public class CityPagerFragment extends Fragment {
         switch (item.getItemId()){
             case R.id.previus:
                 // Retrocedemos una página
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
-                updateCityInfo();
+                showCity(mViewPager.getCurrentItem()-1);
                 return true;
             case R.id.next:
                 // Avanzamos una página
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
-                updateCityInfo();
+                showCity(mViewPager.getCurrentItem()+1);
                 return true;
         }
         return superValue;
