@@ -1,28 +1,36 @@
 package com.benjagarrido.guedr.activity;
 
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.MenuItem;
 
 import com.benjagarrido.guedr.R;
-import com.benjagarrido.guedr.fragment.CityListFragment;
-import com.benjagarrido.guedr.model.City;
+import com.benjagarrido.guedr.fragment.CityPagerFragment;
 
-public class ForecastActivity extends AppCompatActivity implements CityListFragment.CityListListener {
-    private static final String TAG = ForecastActivity.class.getName();
+/**
+ * Created by benjamingarridobarreiro on 16/11/16.
+ */
+
+public class CityPagerActivity extends AppCompatActivity {
+    private static final String TAG = CityPagerActivity.class.getName();
+    public final static String EXTRA_CITY_INDEX = TAG + ".EXTRA_CITY_INDEX";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forecast);
+        setContentView(R.layout.activity_city_pager);
 
         // Le indicamos a la actividad la toolbar a utilizar @layout/toolbar_main
         Toolbar toolbar = (Toolbar) findViewById(R.id.tbMainToolbar);
 
         // Le decimos a la actividad que queremos mostrar esa vista toolbar como nuestra toolbar
         setSupportActionBar(toolbar);
+        // Añadimos la flecha de back
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
 
         FragmentManager fm = getFragmentManager();
 
@@ -32,23 +40,24 @@ public class ForecastActivity extends AppCompatActivity implements CityListFragm
         // - Cuando cambia el tamaño de la aplicación por algún motivo
         // - Cuando existe una falta de memoria
         // - Cuando se gira el dispositivo
-        if(fm.findFragmentById(R.id.flContent) == null){
+        if(fm.findFragmentById(R.id.flCityPager) == null){
+            int initialCityIndex = getIntent().getIntExtra(EXTRA_CITY_INDEX,0);
+
             // Como no existe lo añadimos con una transacción a nuestra jerarquía de vistas
             fm.beginTransaction()
-                    .add(R.id.flContent, new CityListFragment())
+                    .add(R.id.flCityPager, new CityPagerFragment().newInstance(initialCityIndex))
                     .commit();
         }
     }
 
     @Override
-    public void onCitySelected(City city, int position) {
-        // Aquí me entero de que una ciudad ha sido seleccionada en el CityListFragment
-        // Tendré que mostrar la ciudad en el CityPagerFragment
-        Log.v(TAG, "Se ha seleccionado la ciudad número " + position);
-
-        Intent intent = new Intent(this, CityPagerActivity.class);
-        intent.putExtra(CityPagerActivity.EXTRA_CITY_INDEX,position);
-
-        startActivity(intent);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean superValue = super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home){
+            // Han pulsado la flecha de back en la barra y por lo tanto debemos finalizar la actividad
+            finish();
+            return true;
+        }
+        return superValue;
     }
 }

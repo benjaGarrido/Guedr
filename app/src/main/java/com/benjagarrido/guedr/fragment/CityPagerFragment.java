@@ -23,8 +23,21 @@ import com.benjagarrido.guedr.model.City;
  * A simple {@link Fragment} subclass.
  */
 public class CityPagerFragment extends Fragment {
+    private static final String ARG_CITY_INDEX = "ARG_CITY_INDEX";
+
     private Cities mCities;
     private ViewPager mViewPager;
+    private int mInitialCityIndex;
+
+    public static CityPagerFragment newInstance(int position){
+        Bundle arguments = new Bundle();
+        arguments.putInt(ARG_CITY_INDEX,position);
+
+        CityPagerFragment fragment = new CityPagerFragment();
+        fragment.setArguments(arguments);
+
+        return fragment;
+    }
 
     public CityPagerFragment() {
         // Required empty public constructor
@@ -34,6 +47,9 @@ public class CityPagerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        if(getArguments() != null){
+            mInitialCityIndex = getArguments().getInt(ARG_CITY_INDEX);
+        }
     }
 
     @Override
@@ -55,7 +71,6 @@ public class CityPagerFragment extends Fragment {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -68,7 +83,11 @@ public class CityPagerFragment extends Fragment {
 
             }
         });
+
+        mViewPager.setCurrentItem(mInitialCityIndex);
+
         updateCityInfo();
+
         return root;
     }
     public void updateCityInfo (){

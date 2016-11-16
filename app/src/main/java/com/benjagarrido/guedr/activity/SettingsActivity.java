@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -53,6 +54,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Le decimos a la actividad que queremos mostrar esa vista toolbar como nuestra toolbar
         setSupportActionBar(toolbar);
+        // Añadimos la flecha de back
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     private void cancelSettings() {
         setResult(RESULT_CANCELED);
@@ -65,5 +68,15 @@ public class SettingsActivity extends AppCompatActivity {
         setResult(RESULT_OK, returnIntent);
         // Finalizamos nuestra actividad
         finish();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean superValue = super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home){
+            // Han pulsado la flecha de back en la barra y por lo tanto debemos finalizar la actividad
+            finish();
+            return true;
+        }
+        return superValue;
     }
 }
