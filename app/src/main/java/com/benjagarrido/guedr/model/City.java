@@ -10,6 +10,15 @@ public class City implements Serializable{
     private String mName;
     private Forecast mForecast;
 
+    public City(String name, Forecast forecast) {
+        mName = name;
+        mForecast = forecast;
+    }
+    public City(String name) {
+        mName = name;
+    }
+
+
     public String getName() {
         return mName;
     }
@@ -23,12 +32,6 @@ public class City implements Serializable{
     }
 
     public void setForecast(Forecast forecast) {
-        mForecast = forecast;
-    }
-
-    public City(String name, Forecast forecast) {
-
-        mName = name;
         mForecast = forecast;
     }
 

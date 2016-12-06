@@ -23,6 +23,10 @@ import com.benjagarrido.guedr.activity.SettingsActivity;
 import com.benjagarrido.guedr.model.City;
 import com.benjagarrido.guedr.model.Forecast;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 /**
  * Created by benjamingarridobarreiro on 9/11/16.
  */
@@ -167,20 +171,51 @@ public class ForecastFragment extends Fragment{
     public void updateCityInfo (){
         Forecast forecast = mCity.getForecast();
 
-        float maxTemp = forecast.getMaxTemp();
-        float minTemp=forecast.getMimTemp();
-
-        if (!showCelsius){
-            maxTemp = toFarenheit(maxTemp);
-            minTemp = toFarenheit(minTemp);
+        // Si no tengo forecast (null) entonces lo tengo que bajar
+        if (forecast==null){
+            downloadWeather();
+        } else {
+            float maxTemp = forecast.getMaxTemp();
+            float minTemp=forecast.getMimTemp();
+            if (!showCelsius) {
+                maxTemp = toFarenheit(maxTemp);
+                minTemp = toFarenheit(minTemp);
+            }
+            // Muestro en la interfaz mi modelo
+            mMaxTemp.setText(String.format(getString(R.string.temperatura_maxima),maxTemp));
+            mMinTemp.setText(String.format(getString(R.string.temperatura_minima),minTemp));
+            mHumidity.setText(String.format(getString(R.string.humedad),forecast.getHumidity()));
+            mDescription.setText(forecast.getDescription());
+            mForecastImage.setImageResource(forecast.getIcon());
         }
+    }
 
-        // Muestro en la interfaz mi modelo
-        mMaxTemp.setText(String.format(getString(R.string.temperatura_maxima),maxTemp));
-        mMinTemp.setText(String.format(getString(R.string.temperatura_minima),minTemp));
-        mHumidity.setText(String.format(getString(R.string.humedad),forecast.getHumidity()));
-        mDescription.setText(forecast.getDescription());
-        mForecastImage.setImageResource(forecast.getIcon());
+    private void downloadWeather() {
+        URL url = null;
+        InputStream input = null;
+        try {
+            // API c935bc665b524e3e55d9571e0c8c8311
+            url = new URL(String.format("http://api.openweathermap.org/data/2.5/forecast/daily?q=%s&appid=c935bc665b524e3e55d9571e0c8c8311&units=metrics&lang=sp",mCity.getName()));
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+
+            int responseLength = connection.getContentLength();
+
+            byte data[] = new byte[1024];
+            long currentBytes = 0;
+            int downloadBytes;
+            input = connection.getInputStream();
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((downloadBytes = input.read(data)) != -1){
+                stringBuilder.append(new String(data, 0, downloadBytes));
+            }
+
+            // Analizamos los datos para convertirlos de JSON a un formato manejable en código.
+
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     protected static float toFarenheit (float celsius){
